@@ -1,5 +1,5 @@
 ######## Project settings
-cmake_minimum_required(VERSION 2.8.5)
+cmake_minimum_required(VERSION 3.5)
 include(CheckCCompilerFlag)
 set (PACKAGE_NAME uchardet)
 project (${PACKAGE_NAME} CXX C)
