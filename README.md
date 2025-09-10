@@ -170,12 +170,12 @@ git clone https://github.com/RecursionTaoist/uchardet.git
 mkdir build/ && cd build/
 cmake .. \
   -DCMAKE_BUILD_TYPE=Release \
-  -DCMAKE_INSTALL_PREFIX=/usr \
-  -DCMAKE_C_COMPILER=/opt/homebrew/opt/llvm/bin/clang \
-  -DCMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang++ \
-  -DCMAKE_EXE_LINKER_FLAGS="-L/opt/homebrew/Cellar/llvm/21.1.0/lib/clang/21/lib/darwin"
+  -DCMAKE_INSTALL_PREFIX=/usr
 
+# ignore fuzzing-related build errors when building from source; they do not
+# affect the main library functionality
 make
+
 make install
 ```
 
@@ -186,7 +186,7 @@ make install
 ➜  uchardet git:(cchardet) ✗ ./build/src/tools/uchardet -h
 
 uchardet Command Line Tool
-Version 0.0.6
+Version 0.1.0
 
 Authors: BYVoid, Jehan
 Bug Report: https://bugs.freedesktop.org/enter_bug.cgi?product=uchardet
@@ -197,6 +197,9 @@ Usage:
 Options:
  -v, --version         Print version and build information.
  -h, --help            Print this help.
+
+➜  uchardet git:(cchardet) ./build/src/tools/uchardet ./CMakeLists.txt 
+{ encoding=ASCII, confidence=1.000000 }
  ```
 
 ### Library
@@ -212,3 +215,8 @@ See the file `COPYING` for the complete text of these 3 licenses.
 ## References
 - The original code of universalchardet is available at http://lxr.mozilla.org/seamonkey/source/extensions/universalchardet/
 - Techniques used by universalchardet are described at http://www.mozilla.org/projects/intl/UniversalCharsetDetection.html
+
+## Changelog
+### 0.1.0
+- Add `uchardet_detect_encoding` api
+- Update README

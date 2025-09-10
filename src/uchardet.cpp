@@ -135,3 +135,25 @@ float uchardet_get_confidence(uchardet_t ud)
 {
     return reinterpret_cast<HandleUniversalDetector*>(ud)->GetConfidence();
 }
+
+const char * uchardet_detect_encoding(const char * data, size_t len)
+{
+    uchardet_t ud = uchardet_new();
+    if (!ud) return "";
+
+    int res = uchardet_handle_data(ud, data, len);
+    if (res == HANDLE_DATA_RESULT_ERROR) {
+        uchardet_delete(ud);
+        return "";
+    }
+
+    uchardet_data_end(ud);
+    const char* charset = uchardet_get_charset(ud);
+    uchardet_delete(ud);
+
+    if (charset && charset[0] != '\0') {
+        return charset;
+    }
+
+    return "";
+}
