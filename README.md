@@ -169,6 +169,8 @@ git clone https://github.com/RecursionTaoist/uchardet.git
 ```bash
 mkdir build/ && cd build/
 cmake .. \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=/usr \
   -DCMAKE_C_COMPILER=/opt/homebrew/opt/llvm/bin/clang \
   -DCMAKE_CXX_COMPILER=/opt/homebrew/opt/llvm/bin/clang++ \
   -DCMAKE_EXE_LINKER_FLAGS="-L/opt/homebrew/Cellar/llvm/21.1.0/lib/clang/21/lib/darwin"
