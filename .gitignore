@@ -1,6 +1,7 @@
 __pycache__/
 /build/
 /.vscode/
+/.venv/
 /.idea/
 .cmake-build-debug/
 .DS_Store
