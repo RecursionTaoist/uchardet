@@ -1,10 +1,8 @@
 # uchardet
-
-Forked from [PyYoshi/uchardet](https://github.com/PyYoshi/uchardet)
-
-[uchardet](https://www.freedesktop.org/wiki/Software/uchardet/) is an encoding detector library, which takes a sequence of bytes in an unknown character encoding without any additional information, and attempts to determine the encoding of the text. Returned encoding names are [iconv](https://www.gnu.org/software/libiconv/)-compatible.
-
-uchardet started as a C language binding of the original C++ implementation of the universal charset detection library by Mozilla. It can now detect more charsets, and more reliably than the original implementation.
+## Introduction
+- Forked from [PyYoshi/uchardet](https://github.com/PyYoshi/uchardet)
+- [uchardet](https://www.freedesktop.org/wiki/Software/uchardet/) is an encoding detector library, which takes a sequence of bytes in an unknown character encoding without any additional information, and attempts to determine the encoding of the text. Returned encoding names are [iconv](https://www.gnu.org/software/libiconv/)-compatible.
+- uchardet started as a C language binding of the original C++ implementation of the universal charset detection library by Mozilla. It can now detect more charsets, and more reliably than the original implementation.
 
 ## Supported Languages/Encodings
 * International (Unicode)
@@ -172,11 +170,14 @@ cmake .. \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX=/usr
 
-# ignore fuzzing-related build errors when building from source; they do not
-# affect the main library functionality
+# disabled fuzzing tests in src/CMakeLists.txt to avoid build errors
 make
 
-make install
+# test
+make test
+
+# optional: install
+sudo make install
 ```
 
 ## Usage
@@ -217,6 +218,10 @@ See the file `COPYING` for the complete text of these 3 licenses.
 - Techniques used by universalchardet are described at http://www.mozilla.org/projects/intl/UniversalCharsetDetection.html
 
 ## Changelog
+### 0.1.1
+- Disable building fuzzing targets by default to avoid build errors
+- Add `uchardet_detect_encoding` api to src/symbols.cmake
+
 ### 0.1.0
 - Add `uchardet_detect_encoding` api
 - Update README
