@@ -36,7 +36,7 @@
  * ***** END LICENSE BLOCK ***** */
 #include "../uchardet.h"
 #include <cstdio>
-#include <getopt.h>
+#include <cxxopts.hpp>
 #include <iostream>
 
 #ifndef VERSION
@@ -97,57 +97,53 @@ void show_usage()
 
 int main(int argc, char ** argv)
 {
-    static struct option longopts[] =
-    {
-        { "version", no_argument, NULL, 'v' },
-        { "help", no_argument, NULL, 'h' },
-        { 0, 0, 0, 0 },
-    };
+    cxxopts::Options options("uchardet", "uchardet Command Line Tool");
+    options.add_options()
+        ("v,version", "show version")
+        ("h,help", "print help")
+        ("files", "input files", cxxopts::value<std::vector<std::string>>());
 
-    static int oc;
-    while((oc = getopt_long(argc, argv, "vh", longopts, NULL)) != -1)
+    options.parse_positional({"files"});
+    auto result = options.parse(argc, argv);
+
+    if (result.count("version"))
     {
-        switch (oc)
-        {
-        case 'v':
-            show_version();
-            return 0;
-        case 'h':
-            show_usage();
-            return 0;
-        case '?':
-            printf("Please use %s --help.\n", argv[0]);
-            return 1;
-        }
+        show_version();
+        return 0;
+    }
+    if (result.count("help"))
+    {
+        show_usage();
+        return 0;
     }
 
-    FILE * f = stdin;
     int error_seen = 0;
-    if (argc < 2)
+    if (!result.count("files"))
     {
         // No file arg, use stdin by default
-        //detect(f);
-        size_t len = fread(buffer, 1, BUFFER_SIZE, f);
-        printf("len = %lu\n", len);
-        printf("%s\n", buffer);
+        size_t len = fread(buffer, 1, BUFFER_SIZE, stdin);
         int code = uchardet_detect_encoding(buffer, len);
         printf("%s\n", uchardet_charset_to_string(code));
     }
-    for (int i = 1; i < argc; i++)
+    else
     {
-        const char *filename = argv[i];
-        f = fopen(filename, "r");
-        if (f == NULL)
+        const auto& files = result["files"].as<std::vector<std::string>>();
+        for (const auto& filename : files)
         {
-            perror(filename);
-            error_seen = 1;
-            continue;
+            FILE* f = fopen(filename.c_str(), "r");
+            if (f == nullptr)
+            {
+                perror(filename.c_str());
+                error_seen = 1;
+                continue;
+            }
+            if (files.size() > 1)
+            {
+                printf("%s: ", filename.c_str());
+            }
+            detect(f);
+            fclose(f);
         }
-        if (argc > 2)
-        {
-            printf("%s: ", filename);
-        }
-        detect(f);
     }
 
     return error_seen;

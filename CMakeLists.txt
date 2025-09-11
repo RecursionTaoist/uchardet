@@ -26,6 +26,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 ######## Directory
 
 include(GNUInstallDirs)
+# add cxxopts include directory
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/external/cxxopts)
 
 ######## Configuration
 

@@ -36,8 +36,8 @@
  * ***** END LICENSE BLOCK ***** */
 #include "uchardet.h"
 #include <cstdio>
-#include <string.h>
-#include <stdlib.h>
+#include <cstdlib>
+#include <cstring>
 #include "nscore.h"
 #include "nsUniversalDetector.h"
 

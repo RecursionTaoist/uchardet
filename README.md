@@ -221,6 +221,7 @@ See the file `COPYING` for the complete text of these 3 licenses.
 ### 0.1.1
 - Disable building fuzzing targets by default to avoid build errors
 - Add charset macro definitions, conversion functions, and update `uchardet_detect_encoding` to return macro code
+- Replace `getopt` with `cxxopts` to fix uchardet tool compilation on Windows
 
 ### 0.1.0
 - Add `uchardet_detect_encoding` api
