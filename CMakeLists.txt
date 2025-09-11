@@ -9,7 +9,7 @@ enable_testing()
 set (PACKAGE_URL https://www.freedesktop.org/wiki/Software/uchardet/)
 set (PACKAGE_BUGREPORT https://bugs.freedesktop.org/enter_bug.cgi?product=uchardet)
 set (UCHARDET_VERSION_MAJOR 0)
-set (UCHARDET_VERSION_MINOR 1)
+set (UCHARDET_VERSION_MINOR 2)
 set (UCHARDET_VERSION_REVISION 0)
 
 if (CMAKE_BUILD_TYPE MATCHES Debug)
