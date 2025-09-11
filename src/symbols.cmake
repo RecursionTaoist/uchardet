@@ -7,6 +7,7 @@ set(
 	uchardet_reset
 	uchardet_get_charset
 	uchardet_get_confidence
+	uchardet_detect_encoding
 )
 
 set (LINK_FLAGS "")
