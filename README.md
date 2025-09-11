@@ -220,7 +220,7 @@ See the file `COPYING` for the complete text of these 3 licenses.
 ## Changelog
 ### 0.1.1
 - Disable building fuzzing targets by default to avoid build errors
-- Add `uchardet_detect_encoding` api to src/symbols.cmake
+- Add charset macro definitions, conversion functions, and update `uchardet_detect_encoding` to return macro code
 
 ### 0.1.0
 - Add `uchardet_detect_encoding` api

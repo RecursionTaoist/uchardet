@@ -65,6 +65,58 @@ void uchardet_delete(uchardet_t ud);
 #define HANDLE_DATA_RESULT_DETECTED 0
 #define HANDLE_DATA_RESULT_NEED_MORE_DATA 1
 
+// Charset codes for uchardet, compatible with Rust enum Charset.
+#define CHARSET_UTF8                    0
+#define CHARSET_UTF16BE                 1
+#define CHARSET_UTF16LE                 2
+#define CHARSET_UTF32BE                 3
+#define CHARSET_UTF32LE                 4
+#define CHARSET_ISO2022_CN              5
+#define CHARSET_BIG5                    6
+#define CHARSET_EUC_TW                  7
+#define CHARSET_GB18030                 8
+#define CHARSET_HZ_GB2312               9
+#define CHARSET_ISO8859_1               10
+#define CHARSET_ISO8859_2               11
+#define CHARSET_ISO8859_3               12
+#define CHARSET_ISO8859_4               13
+#define CHARSET_ISO8859_5               14
+#define CHARSET_ISO8859_6               15
+#define CHARSET_ISO8859_7               16
+#define CHARSET_ISO8859_8               17
+#define CHARSET_ISO8859_9               18
+#define CHARSET_ISO8859_10              19
+#define CHARSET_ISO8859_13              20
+#define CHARSET_ISO8859_15              21
+#define CHARSET_ISO8859_16              22
+#define CHARSET_WINDOWS_1250            23
+#define CHARSET_WINDOWS_1251            24
+#define CHARSET_WINDOWS_1252            25
+#define CHARSET_WINDOWS_1253            26
+#define CHARSET_WINDOWS_1255            27
+#define CHARSET_WINDOWS_1256            28
+#define CHARSET_WINDOWS_1257            29
+#define CHARSET_WINDOWS_1258            30
+#define CHARSET_KOI8R                   31
+#define CHARSET_MAC_CYRILLIC            32
+#define CHARSET_IBM852                  33
+#define CHARSET_IBM855                  34
+#define CHARSET_IBM866                  35
+#define CHARSET_EUC_JP                  36
+#define CHARSET_SHIFT_JIS               37
+#define CHARSET_ISO2022_JP              38
+#define CHARSET_ISO2022_KR              39
+#define CHARSET_EUC_KR                  40
+#define CHARSET_UHC                     41
+#define CHARSET_VISCII                  42
+#define CHARSET_TIS620                  43
+#define CHARSET_ISO8859_11              44
+#define CHARSET_MAC_CENTRALEUROPE       45
+#define CHARSET_ASCII                   46
+#define CHARSET_X_ISO10646_UCS4_34121   47
+#define CHARSET_X_ISO10646_UCS4_21431   48
+#define CHARSET_UNKNOWN                 255
+
 /**
  * Feed data to an encoding detector.
  * The detector is able to shortcut processing when it reaches certainty
@@ -100,17 +152,35 @@ const char * uchardet_get_charset(uchardet_t ud);
 float uchardet_get_confidence(uchardet_t ud);
 
 /**
- * Detects the character encoding of the given data and return its
- * iconv-compatible name.
+ * Converts uchardet/iconv-compatible encoding name string to charset code.
+ * Unrecognized names will return `CHARSET_UNKNOWN`.
+ *
+ * @param charset encoding name string (case-sensitive).
+ * @return corresponding charset code macro, `CHARSET_UNKNOWN` otherwise.
+ */
+int uchardet_charset_from_string(const char *charset);
+
+/**
+ * Converts charset code to uchardet/iconv-compatible encoding name string.
+ * Unknown codes will return "UNKNOWN".
+ *
+ * @param code charset macro value.
+ * @return encoding name string.
+ */
+const char *uchardet_charset_to_string(int code);
+
+/**
+ * Detects the character encoding of the given data and returns its charset
+ * macro code.
  *
  * @param data [in] pointer to the input data buffer.
  * @param len  [in] length of the input data in bytes.
- * @return a null-terminated string representing the detected charset name
- *         (iconv-compatible) on success, an empty string otherwise.
- * @note The returned pointer is valid until the next call and must not be
- *       freed by the caller.
+ * @return charset macro code (e.g. `CHARSET_UTF8`) on success,
+ *         `CHARSET_UNKNOWN` otherwise.
+ * @note The returned code can be converted to a string via
+ *       `uchardet_charset_to_string()`.
  */
-const char * uchardet_detect_encoding(const char * data, size_t len);
+int uchardet_detect_encoding(const char * data, size_t len);
 
 #ifdef __cplusplus
 }

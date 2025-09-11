@@ -36,11 +36,8 @@
  * ***** END LICENSE BLOCK ***** */
 #include "../uchardet.h"
 #include <cstdio>
-#include <cstring>
-#include <cstdlib>
 #include <getopt.h>
 #include <iostream>
-#include <stdio.h>
 
 #ifndef VERSION
 #define VERSION "Unknown"
@@ -69,7 +66,7 @@ void detect(FILE * fp)
     float confidence = uchardet_get_confidence(handle);
     if (*charset)
     	printf("{ encoding=%s, confidence=%f }\n", charset, confidence);
-	else
+    else
 		printf("unknown\n");
 	
     uchardet_delete(handle);
@@ -129,7 +126,12 @@ int main(int argc, char ** argv)
     if (argc < 2)
     {
         // No file arg, use stdin by default
-        detect(f);
+        //detect(f);
+        size_t len = fread(buffer, 1, BUFFER_SIZE, f);
+        printf("len = %lu\n", len);
+        printf("%s\n", buffer);
+        int code = uchardet_detect_encoding(buffer, len);
+        printf("%s\n", uchardet_charset_to_string(code));
     }
     for (int i = 1; i < argc; i++)
     {

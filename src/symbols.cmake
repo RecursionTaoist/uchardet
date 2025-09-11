@@ -7,6 +7,8 @@ set(
 	uchardet_reset
 	uchardet_get_charset
 	uchardet_get_confidence
+	uchardet_charset_from_string
+	uchardet_charset_to_string
 	uchardet_detect_encoding
 )
 
