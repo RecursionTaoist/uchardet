@@ -168,7 +168,8 @@ git clone https://github.com/RecursionTaoist/uchardet.git
 mkdir build/ && cd build/
 cmake .. \
   -DCMAKE_BUILD_TYPE=Release \
-  -DCMAKE_INSTALL_PREFIX=/usr
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DCMAKE_POSITION_INDEPENDENT_CODE=ON
 
 # disabled fuzzing tests in src/CMakeLists.txt to avoid build errors
 make
@@ -184,10 +185,10 @@ sudo make install
 ### Command Line
 
 ```bash
-➜  uchardet git:(cchardet) ✗ ./build/src/tools/uchardet -h
+$ ./build/src/tools/uchardet -h
 
 uchardet Command Line Tool
-Version 0.1.0
+Version 0.2.0
 
 Authors: BYVoid, Jehan
 Bug Report: https://bugs.freedesktop.org/enter_bug.cgi?product=uchardet
@@ -199,8 +200,11 @@ Options:
  -v, --version         Print version and build information.
  -h, --help            Print this help.
 
-➜  uchardet git:(cchardet) ./build/src/tools/uchardet ./CMakeLists.txt 
+$ ./build/src/tools/uchardet ./CMakeLists.txt 
 { encoding=ASCII, confidence=1.000000 }
+
+$ cat ./CMakeLists.txt | ./build/src/tools/uchardet
+ASCII
  ```
 
 ### Library
