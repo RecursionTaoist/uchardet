@@ -218,7 +218,7 @@ See the file `COPYING` for the complete text of these 3 licenses.
 - Techniques used by universalchardet are described at http://www.mozilla.org/projects/intl/UniversalCharsetDetection.html
 
 ## Changelog
-### 0.1.1
+### 0.2.0
 - Disable building fuzzing targets by default to avoid build errors
 - Add charset macro definitions, conversion functions, and update `uchardet_detect_encoding` to return macro code
 - Replace `getopt` with `cxxopts` to fix uchardet tool compilation on Windows
